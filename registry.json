@@ -1,0 +1,133 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "kan",
+  "homepage": "https://kan-ui.netlify.app",
+  "items": [
+    {
+      "name": "kan-theme",
+      "type": "registry:item",
+      "title": "KAN theme",
+      "description": "Stone palette (dark default, light via data-theme), Instrument Sans + IBM Plex Mono, KAN type scale, radii, motion and utilities, mapped onto the shadcn/ui variables.",
+      "dependencies": [
+        "tailwindcss",
+        "@tailwindcss/vite",
+        "clsx",
+        "tailwind-merge",
+        "class-variance-authority",
+        "radix-ui",
+        "lucide-react",
+        "@fontsource-variable/instrument-sans",
+        "@fontsource/ibm-plex-mono"
+      ],
+      "files": [
+        {
+          "path": "src/styles/kan.css",
+          "type": "registry:file",
+          "target": "src/styles/kan.css"
+        },
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/hooks/use-kan-theme.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Primary (one per view), secondary (default), ghost, danger and link.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input and field",
+      "description": "Text input with a mono overline label and a helper or error line.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "stat",
+      "type": "registry:ui",
+      "title": "Stat",
+      "description": "A tile for one number that matters, with delta and history bars.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/stat.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "type": "registry:ui",
+      "title": "Status",
+      "description": "Status label (dot plus word) and one-line banner.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/status.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "segmented",
+      "type": "registry:ui",
+      "title": "Segmented",
+      "description": "Switch between 2–5 views or units. Always keeps one selection.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/segmented.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kan-logo",
+      "type": "registry:ui",
+      "title": "KAN logo",
+      "description": "Wordmark and K icon as components that follow the theme (currentColor).",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/kan-logo.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

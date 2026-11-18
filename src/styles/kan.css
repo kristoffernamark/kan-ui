@@ -1,0 +1,254 @@
+/*
+ * KAN — theme for Tailwind v4 + shadcn/ui
+ * Stone palette. Dark is the default (:root); light via data-theme="light" on <html>.
+ * Source of truth: the KAN design system. Change tokens there first, then here.
+ */
+
+@import "tailwindcss";
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+/* ---------- Dark (default) ---------- */
+:root {
+  color-scheme: dark;
+
+  /* KAN semantic tokens */
+  --kan-bg: #0c0b0a;
+  --kan-surface-1: #141311;
+  --kan-surface-2: #1b1a18;
+  --kan-surface-3: #22201e;
+  --kan-border: #2b2926;
+  --kan-border-strong: #35322e;
+  --kan-text: #eeeae3;
+  --kan-text-secondary: #b0aaa2;
+  --kan-text-muted: #8f8a84;
+  --kan-fill-primary: #eeeae3;
+  --kan-on-primary: #0c0b0a;
+  --kan-fill-hover: #1b1a18;
+  --kan-fill-selected: #22201e;
+  --kan-data-active: #eeeae3;
+  --kan-data-muted: #2b2926;
+  --kan-focus: #eeeae3;
+  --kan-danger: #e5735f;
+  --kan-danger-bg: #2a1714;
+  --kan-success: #7fb58a;
+  --kan-success-bg: #15211a;
+  --kan-warning: #d9a84e;
+  --kan-warning-bg: #271f10;
+  --kan-shadow-popover: 0 8px 24px rgba(0, 0, 0, 0.55);
+
+  /* shadcn/ui variables, mapped to KAN */
+  --background: var(--kan-bg);
+  --foreground: var(--kan-text);
+  --card: var(--kan-surface-2);
+  --card-foreground: var(--kan-text);
+  --popover: var(--kan-surface-3);
+  --popover-foreground: var(--kan-text);
+  --primary: var(--kan-fill-primary);
+  --primary-foreground: var(--kan-on-primary);
+  --secondary: var(--kan-surface-1);
+  --secondary-foreground: var(--kan-text);
+  --muted: var(--kan-surface-1);
+  --muted-foreground: var(--kan-text-muted);
+  --accent: var(--kan-fill-hover);
+  --accent-foreground: var(--kan-text);
+  --destructive: var(--kan-danger);
+  --border: var(--kan-border);
+  --input: var(--kan-border-strong);
+  --ring: var(--kan-focus);
+  --chart-1: var(--kan-data-active);
+  --chart-2: #b0aaa2;
+  --chart-3: #6b665f;
+  --chart-4: #4a4641;
+  --chart-5: var(--kan-data-muted);
+  --sidebar: var(--kan-surface-1);
+  --sidebar-foreground: var(--kan-text);
+  --sidebar-primary: var(--kan-fill-primary);
+  --sidebar-primary-foreground: var(--kan-on-primary);
+  --sidebar-accent: var(--kan-fill-selected);
+  --sidebar-accent-foreground: var(--kan-text);
+  --sidebar-border: var(--kan-border);
+  --sidebar-ring: var(--kan-focus);
+  --radius: 4px;
+}
+
+/* ---------- Light ---------- */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --kan-bg: #f6f4ef;
+  --kan-surface-1: #fbfaf7;
+  --kan-surface-2: #ffffff;
+  --kan-surface-3: #ffffff;
+  --kan-border: #dedad3;
+  --kan-border-strong: #c9c4bc;
+  --kan-text: #0c0b0a;
+  --kan-text-secondary: #4a4641;
+  --kan-text-muted: #6b665f;
+  --kan-fill-primary: #0c0b0a;
+  --kan-on-primary: #f6f4ef;
+  --kan-fill-hover: #eeeae3;
+  --kan-fill-selected: #dedad3;
+  --kan-data-active: #0c0b0a;
+  --kan-data-muted: #dedad3;
+  --kan-focus: #0c0b0a;
+  --kan-danger: #b23a2a;
+  --kan-danger-bg: #f7e4df;
+  --kan-success: #2f7a43;
+  --kan-success-bg: #e2efe4;
+  --kan-warning: #8a5a0e;
+  --kan-warning-bg: #f5ecd9;
+  --kan-shadow-popover: 0 8px 24px rgba(12, 11, 10, 0.1);
+
+  --chart-2: #4a4641;
+  --chart-3: #8f8a84;
+  --chart-4: #c9c4bc;
+}
+
+/* ---------- Tailwind theme ---------- */
+@theme inline {
+  /* shadcn names */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* KAN names (use these in KAN-specific code) */
+  --color-surface-1: var(--kan-surface-1);
+  --color-surface-2: var(--kan-surface-2);
+  --color-surface-3: var(--kan-surface-3);
+  --color-border-strong: var(--kan-border-strong);
+  --color-subtle: var(--kan-text-secondary);
+  --color-selected: var(--kan-fill-selected);
+  --color-data-active: var(--kan-data-active);
+  --color-data-muted: var(--kan-data-muted);
+  --color-danger: var(--kan-danger);
+  --color-danger-bg: var(--kan-danger-bg);
+  --color-success: var(--kan-success);
+  --color-success-bg: var(--kan-success-bg);
+  --color-warning: var(--kan-warning);
+  --color-warning-bg: var(--kan-warning-bg);
+
+  /* Type */
+  --font-sans: "Instrument Sans Variable", "Instrument Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --text-display-xl: 56px;
+  --text-display-xl--line-height: 60px;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display: 40px;
+  --text-display--line-height: 44px;
+  --text-display--letter-spacing: -0.015em;
+  --text-title: 24px;
+  --text-title--line-height: 30px;
+  --text-title--letter-spacing: -0.01em;
+  --text-heading: 18px;
+  --text-heading--line-height: 26px;
+  --text-body: 15px;
+  --text-body--line-height: 24px;
+  --text-small: 13px;
+  --text-small--line-height: 20px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-metric-xl: 40px;
+  --text-metric-xl--line-height: 44px;
+  --text-metric-xl--letter-spacing: -0.02em;
+  --text-metric: 24px;
+  --text-metric--line-height: 28px;
+  --text-metric--letter-spacing: -0.01em;
+  --text-data: 13px;
+  --text-data--line-height: 20px;
+  --text-label: 11px;
+  --text-label--line-height: 16px;
+  --text-label--letter-spacing: 0.06em;
+
+  /* Shape */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --shadow-popover: var(--kan-shadow-popover);
+
+  /* Motion */
+  --ease-kan: cubic-bezier(0.2, 0, 0, 1);
+  --default-transition-duration: 120ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ---------- KAN utilities ---------- */
+@utility kan-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+@utility kan-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility kan-focus {
+  &:focus-visible {
+    outline: 2px solid var(--kan-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-background text-foreground font-sans text-body;
+  }
+  ::selection {
+    background: var(--kan-fill-primary);
+    color: var(--kan-on-primary);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 1ms !important;
+      animation-duration: 1ms !important;
+    }
+  }
+}
