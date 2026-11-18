@@ -11,7 +11,7 @@ Reference (tokens, guidelines, previews): https://claude.ai/artifact/8kKeQhw9Tyc
 | `src/styles/kan.css` | The theme: Stone palette (dark default, light via `data-theme="light"`), shadcn variable mapping, type scale, radii, motion, `kan-label` / `kan-num` / `kan-focus` utilities. Fonts are self-hosted via Fontsource (no Google requests). |
 | `src/components/ui/` | `button`, `input` + `field`, `stat`, `status`, `segmented` |
 | `src/hooks/use-kan-theme.ts` | Theme toggle that remembers the user's choice |
-| `src/App.tsx` | Showcase page with every component |
+| `src/App.tsx`, `src/docs/` | The public reference site: overview, colour, typography, space and shape, motion, components, logo, writing and access, build. Values are read live from `kan.css`. |
 | `registry.json` | The `@kan` registry definition. `npm run build` writes it to `public/r/*.json` |
 | `skill/kan/SKILL.md` | The Claude Code skill |
 | `netlify.toml` | Deploys the showcase and the registry as one site |

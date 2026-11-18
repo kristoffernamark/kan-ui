@@ -12,7 +12,8 @@
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
 /* ---------- Dark (default) ---------- */
-:root {
+:root,
+[data-theme="dark"] {
   color-scheme: dark;
 
   /* KAN semantic tokens */

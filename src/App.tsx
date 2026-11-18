@@ -1,131 +1,122 @@
-import { useState } from "react"
-import { Download, Moon, Sun } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Menu, Moon, Sun, X } from "lucide-react"
 
+import { cn } from "@/lib/utils"
 import { useKanTheme } from "@/hooks/use-kan-theme"
 import { Button } from "@/components/ui/button"
 import { KanWordmark } from "@/components/ui/kan-logo"
-import { Field, FieldHint, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import { Segmented, SegmentedItem } from "@/components/ui/segmented"
-import { Stat, StatBars, StatDelta, StatLabel, StatValue } from "@/components/ui/stat"
-import { Banner, StatusLabel } from "@/components/ui/status"
+import { PAGE_COMPONENTS, PAGES, type PageId } from "@/docs/pages"
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function readHash(): PageId {
+  const h = window.location.hash.slice(1)
+  return (PAGES.some((p) => p.id === h) ? h : "overview") as PageId
+}
+
+function Nav({ current, onNavigate }: { current: PageId; onNavigate?: () => void }) {
   return (
-    <section className="border-t py-8">
-      <h2 className="kan-label mb-5 text-muted-foreground">{title}</h2>
-      {children}
-    </section>
+    <ul className="flex flex-col gap-0.5">
+      {PAGES.map((p) => (
+        <li key={p.id}>
+          <a
+            href={`#${p.id}`}
+            onClick={onNavigate}
+            aria-current={p.id === current ? "page" : undefined}
+            className={cn(
+              "kan-focus flex h-9 items-center rounded-md px-3 text-small text-subtle transition-colors hover:bg-accent hover:text-foreground",
+              p.id === current && "bg-selected text-foreground"
+            )}
+          >
+            {p.label}
+          </a>
+        </li>
+      ))}
+    </ul>
   )
 }
 
 export default function App() {
   const { theme, setTheme } = useKanTheme()
-  const [range, setRange] = useState("week")
-  const [pace, setPace] = useState("5:7")
-  const paceInvalid = !/^\d{1,2}:\d{2}$/.test(pace)
+  const [page, setPage] = useState<PageId>(readHash)
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const onHash = () => {
+      const next = readHash()
+      const doc = document as Document & { startViewTransition?: (cb: () => void) => void }
+      const apply = () => {
+        setPage(next)
+        window.scrollTo({ top: 0 })
+      }
+      if (doc.startViewTransition && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        doc.startViewTransition(apply)
+      } else apply()
+    }
+    window.addEventListener("hashchange", onHash)
+    return () => window.removeEventListener("hashchange", onHash)
+  }, [])
+
+  useEffect(() => {
+    const label = PAGES.find((p) => p.id === page)?.label
+    document.title = page === "overview" ? "KAN" : `${label} · KAN`
+  }, [page])
+
+  const Page = PAGE_COMPONENTS[page]
 
   return (
-    <main className="mx-auto max-w-[1080px] px-4 py-12 sm:px-12">
-      <header className="mb-12 flex items-start justify-between gap-4">
-        <div>
-          <h1>
-            <span className="sr-only">KAN</span>
-            <KanWordmark className="h-10" aria-hidden="true" />
-          </h1>
-          <p className="mt-4 text-subtle">Quiet precision for the things I build.</p>
+    <>
+      <header className="sticky top-0 z-20 border-b bg-background">
+        <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-4 px-4 sm:px-8">
+          <a href="#overview" className="kan-focus rounded-sm" aria-label="KAN, overview">
+            <KanWordmark className="h-6" aria-hidden="true" />
+          </a>
+          <span className="hidden kan-label text-muted-foreground sm:inline">Design system</span>
+          <div className="ml-auto flex items-center gap-2">
+            <Button asChild variant="ghost" className="hidden sm:inline-flex">
+              <a href="https://github.com/kristoffernamark/kan-ui">GitHub</a>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              {theme === "dark" ? <Sun /> : <Moon />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <X /> : <Menu />}
+            </Button>
+          </div>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? <Sun /> : <Moon />}
-        </Button>
+        {menuOpen && (
+          <nav
+            aria-label="Sections"
+            className="absolute inset-x-4 top-[calc(100%+8px)] rounded-lg border bg-popover p-2 shadow-popover md:hidden"
+          >
+            <Nav current={page} onNavigate={() => setMenuOpen(false)} />
+          </nav>
+        )}
       </header>
 
-      <Section title="Button">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button variant="primary">Plan loop</Button>
-          <Button>
-            <Download /> Export
-          </Button>
-          <Button variant="ghost">Cancel</Button>
-          <Button variant="danger">Delete route</Button>
-          <Button size="sm">Small</Button>
-          <Button variant="link">View sources</Button>
-        </div>
-      </Section>
-
-      <Section title="Input">
-        <div className="grid gap-6 sm:grid-cols-3">
-          <Field>
-            <FieldLabel htmlFor="start">Start</FieldLabel>
-            <Input id="start" placeholder="Hornsgatan 12" />
-            <FieldHint>Street or coordinates.</FieldHint>
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="distance">Distance</FieldLabel>
-            <Input id="distance" defaultValue="12 km" />
-            <FieldHint>Loops within 10% of this.</FieldHint>
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="pace">Pace</FieldLabel>
-            <Input id="pace" value={pace} onChange={(e) => setPace(e.target.value)} aria-invalid={paceInvalid} />
-            <FieldHint error={paceInvalid}>{paceInvalid ? "Use mm:ss, like 5:10." : "Minutes per km."}</FieldHint>
-          </Field>
-        </div>
-      </Section>
-
-      <Section title="Stat">
-        <div className="grid items-start gap-6 sm:grid-cols-3">
-          <Stat>
-            <StatLabel>Weekly distance</StatLabel>
-            <StatValue hero unit="km">42.6</StatValue>
-            <StatDelta tone="positive">+6.1 km vs last week</StatDelta>
-            <StatBars values={[18, 28, 13, 35, 25, 22, 42.6]} startLabel="w40" endLabel="w46" />
-          </Stat>
-          <Stat>
-            <StatLabel>Avg pace</StatLabel>
-            <StatValue unit="/km">5:12</StatValue>
-            <StatDelta>Same as last week</StatDelta>
-          </Stat>
-          <Stat>
-            <StatLabel>Salted streets</StatLabel>
-            <StatValue unit="km">318</StatValue>
-            <StatDelta>Updated 06:40</StatDelta>
-          </Stat>
-        </div>
-      </Section>
-
-      <Section title="Status">
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap gap-4">
-            <StatusLabel>Draft</StatusLabel>
-            <StatusLabel tone="success">Salted</StatusLabel>
-            <StatusLabel tone="warning">Partly salted</StatusLabel>
-            <StatusLabel tone="danger">Not cleared</StatusLabel>
+      <div className="mx-auto flex max-w-[1200px] gap-12 px-4 sm:px-8">
+        <nav aria-label="Sections" className="sticky top-16 hidden h-[calc(100vh-4rem)] w-52 shrink-0 py-10 md:block">
+          <Nav current={page} />
+        </nav>
+        <main className="min-w-0 flex-1 py-10 sm:py-14">
+          <div className="max-w-[880px]">
+            <Page />
           </div>
-          <Banner tone="warning" className="max-w-md">
-            Salting data is 3 hours old. Routes may have changed.
-          </Banner>
-        </div>
-      </Section>
-
-      <Section title="Segmented">
-        <div className="flex flex-wrap items-center gap-4">
-          <Segmented value={range} onValueChange={setRange} aria-label="Time range">
-            <SegmentedItem value="week">Week</SegmentedItem>
-            <SegmentedItem value="month">Month</SegmentedItem>
-            <SegmentedItem value="year">Year</SegmentedItem>
-          </Segmented>
-          <Segmented defaultValue="km" aria-label="Unit">
-            <SegmentedItem value="km">km</SegmentedItem>
-            <SegmentedItem value="mi">mi</SegmentedItem>
-          </Segmented>
-        </div>
-      </Section>
-    </main>
+          <footer className="mt-16 max-w-[880px] border-t pt-6 pb-10 text-small text-muted-foreground">
+            KAN · Kristoffer Avci Nåmark · Built with shadcn/ui, Radix and Tailwind.
+          </footer>
+        </main>
+      </div>
+    </>
   )
 }
