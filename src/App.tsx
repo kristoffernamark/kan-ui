@@ -3,6 +3,7 @@ import { Download, Moon, Sun } from "lucide-react"
 
 import { useKanTheme } from "@/hooks/use-kan-theme"
 import { Button } from "@/components/ui/button"
+import { KanWordmark } from "@/components/ui/kan-logo"
 import { Field, FieldHint, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Segmented, SegmentedItem } from "@/components/ui/segmented"
@@ -28,8 +29,11 @@ export default function App() {
     <main className="mx-auto max-w-[1080px] px-4 py-12 sm:px-12">
       <header className="mb-12 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-display">KAN</h1>
-          <p className="mt-2 text-subtle">Quiet precision for the things I build.</p>
+          <h1>
+            <span className="sr-only">KAN</span>
+            <KanWordmark className="h-10" aria-hidden="true" />
+          </h1>
+          <p className="mt-4 text-subtle">Quiet precision for the things I build.</p>
         </div>
         <Button
           variant="ghost"
