@@ -19,7 +19,7 @@ Reference (tokens, guidelines, previews): https://claude.ai/artifact/8kKeQhw9Tyc
 ## One-time setup
 
 1. **Put this folder in a GitHub repo** (e.g. `kan-ui`).
-2. **Deploy it to Netlify.** The build runs `shadcn build` and Vite. The site serves the showcase at `/` and the registry at `/r/<name>.json`. If the site gets a URL other than `kan-ui.netlify.app`, replace that URL in `skill/kan/SKILL.md` and `registry.json`.
+2. **Deploy it to Netlify.** The build runs `shadcn build` and Vite. The site serves the showcase at `/` and the registry at `/r/<name>.json`. If the site gets a URL other than `kan-design-system.netlify.app`, replace that URL in `skill/kan/SKILL.md` and `registry.json`.
 3. **Install the skill for Claude Code**, so it applies in every project:
    ```sh
    mkdir -p ~/.claude/skills && cp -r skill/kan ~/.claude/skills/

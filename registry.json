@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "kan",
-  "homepage": "https://kan-ui.netlify.app",
+  "homepage": "https://kan-design-system.netlify.app",
   "items": [
     {
       "name": "kan-theme",

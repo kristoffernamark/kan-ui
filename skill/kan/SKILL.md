@@ -22,7 +22,7 @@ Not for SeventyOne Consulting work. That has its own brand.
      "tailwind": { "config": "", "css": "src/styles/kan.css", "baseColor": "", "cssVariables": true, "prefix": "" },
      "aliases": { "components": "@/components", "utils": "@/lib/utils", "ui": "@/components/ui", "lib": "@/lib", "hooks": "@/hooks" },
      "iconLibrary": "lucide",
-     "registries": { "@kan": "https://kan-ui.netlify.app/r/{name}.json" }
+     "registries": { "@kan": "https://kan-design-system.netlify.app/r/{name}.json" }
    }
    ```
 3. `npx shadcn@latest add @kan/kan-theme` and then the components you need, e.g. `npx shadcn@latest add @kan/button @kan/input @kan/stat`.
