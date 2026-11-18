@@ -41,38 +41,9 @@
   --kan-warning-bg: #271f10;
   --kan-shadow-popover: 0 8px 24px rgba(0, 0, 0, 0.55);
 
-  /* shadcn/ui variables, mapped to KAN */
-  --background: var(--kan-bg);
-  --foreground: var(--kan-text);
-  --card: var(--kan-surface-2);
-  --card-foreground: var(--kan-text);
-  --popover: var(--kan-surface-3);
-  --popover-foreground: var(--kan-text);
-  --primary: var(--kan-fill-primary);
-  --primary-foreground: var(--kan-on-primary);
-  --secondary: var(--kan-surface-1);
-  --secondary-foreground: var(--kan-text);
-  --muted: var(--kan-surface-1);
-  --muted-foreground: var(--kan-text-muted);
-  --accent: var(--kan-fill-hover);
-  --accent-foreground: var(--kan-text);
-  --destructive: var(--kan-danger);
-  --border: var(--kan-border);
-  --input: var(--kan-border-strong);
-  --ring: var(--kan-focus);
-  --chart-1: var(--kan-data-active);
   --chart-2: #b0aaa2;
   --chart-3: #6b665f;
   --chart-4: #4a4641;
-  --chart-5: var(--kan-data-muted);
-  --sidebar: var(--kan-surface-1);
-  --sidebar-foreground: var(--kan-text);
-  --sidebar-primary: var(--kan-fill-primary);
-  --sidebar-primary-foreground: var(--kan-on-primary);
-  --sidebar-accent: var(--kan-fill-selected);
-  --sidebar-accent-foreground: var(--kan-text);
-  --sidebar-border: var(--kan-border);
-  --sidebar-ring: var(--kan-focus);
   --radius: 4px;
 }
 
@@ -107,6 +78,41 @@
   --chart-2: #4a4641;
   --chart-3: #8f8a84;
   --chart-4: #c9c4bc;
+}
+
+
+/* ---------- shadcn/ui variables, mapped to KAN ----------
+ * Declared on every theme scope so a nested data-theme panel resolves them itself. */
+:root,
+[data-theme] {
+  --background: var(--kan-bg);
+  --foreground: var(--kan-text);
+  --card: var(--kan-surface-2);
+  --card-foreground: var(--kan-text);
+  --popover: var(--kan-surface-3);
+  --popover-foreground: var(--kan-text);
+  --primary: var(--kan-fill-primary);
+  --primary-foreground: var(--kan-on-primary);
+  --secondary: var(--kan-surface-1);
+  --secondary-foreground: var(--kan-text);
+  --muted: var(--kan-surface-1);
+  --muted-foreground: var(--kan-text-muted);
+  --accent: var(--kan-fill-hover);
+  --accent-foreground: var(--kan-text);
+  --destructive: var(--kan-danger);
+  --border: var(--kan-border);
+  --input: var(--kan-border-strong);
+  --ring: var(--kan-focus);
+  --chart-1: var(--kan-data-active);
+  --chart-5: var(--kan-data-muted);
+  --sidebar: var(--kan-surface-1);
+  --sidebar-foreground: var(--kan-text);
+  --sidebar-primary: var(--kan-fill-primary);
+  --sidebar-primary-foreground: var(--kan-on-primary);
+  --sidebar-accent: var(--kan-fill-selected);
+  --sidebar-accent-foreground: var(--kan-text);
+  --sidebar-border: var(--kan-border);
+  --sidebar-ring: var(--kan-focus);
 }
 
 /* ---------- Tailwind theme ---------- */

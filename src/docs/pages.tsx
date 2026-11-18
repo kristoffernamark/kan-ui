@@ -34,7 +34,7 @@ function Overview() {
       <header className="mb-12">
         <h1>
           <span className="sr-only">KAN</span>
-          <KanWordmark className="h-14" aria-hidden="true" />
+          <KanWordmark className="h-16" aria-hidden="true" />
         </h1>
         <p className="mt-6 max-w-[52ch] text-heading font-normal text-subtle">
           Quiet precision for the things I build. KAN is Kristoffer Avci Nåmark's personal design system: dark first,
@@ -471,43 +471,37 @@ const LOGO_FILES = [
   ["kan-wordmark-paper.svg", "Wordmark, paper", "Dark grounds"],
   ["kan-icon-ink.svg", "Icon, ink", "Light grounds"],
   ["kan-icon-paper.svg", "Icon, paper", "Dark grounds"],
-  ["kan-app-icon.svg", "App icon", "512px tile. The OS masks the corners"],
-  ["kan-favicon.svg", "Favicon", "32px tile, heavier stroke"],
+  ["kan-app-icon.svg", "App icon", "512px ink tile with k."],
+  ["kan-favicon.svg", "Favicon", "32px ink tile with k."],
 ] as const
 
 function Logo() {
   return (
     <>
       <PageHeader label="Brand" title="Logo">
-        One even stroke, cut corners, and a single small square: the point of precision. The square always sits in a
-        letter's open space: under the A's peak in the wordmark, between the K's arm and leg in the icon.
+        The name, set quietly: lowercase "kan" in Instrument Sans with a square full stop. In Swedish it reads as a calm
+        statement, <em>kan.</em> (can.). The full stop is the one detail that makes it ours: square, like every corner in
+        KAN.
       </PageHeader>
 
-      <Section title="Wordmark and icon">
+      <Section title="Wordmark and icon" note={'The icon is "k." on its own, for places the wordmark won\'t fit.'}>
         <div className="grid overflow-hidden rounded-lg border sm:grid-cols-2">
-          <ThemePanel theme="dark" className="flex h-56 items-center justify-center gap-10">
+          <ThemePanel theme="dark" className="flex h-56 items-center justify-center gap-12">
             <KanWordmark className="h-12" />
-            <KanIcon className="size-16" />
+            <KanIcon className="h-12" />
           </ThemePanel>
-          <ThemePanel theme="light" className="flex h-56 items-center justify-center gap-10 border-t sm:border-t-0 sm:border-l">
+          <ThemePanel theme="light" className="flex h-56 items-center justify-center gap-12 border-t sm:border-t-0 sm:border-l">
             <KanWordmark className="h-12" />
-            <KanIcon className="size-16" />
+            <KanIcon className="h-12" />
           </ThemePanel>
         </div>
       </Section>
 
-      <Section title="Small sizes" note="Below 32px the icon uses a heavier stroke so the square survives.">
+      <Section title="App icon and favicon" note={'"k." centred on an ink tile. The OS rounds app icon corners; the favicon has a 4px radius.'}>
         <div className="flex flex-wrap items-end gap-8">
-          {[
-            [48, false],
-            [32, true],
-            [24, true],
-            [16, true],
-          ].map(([size, small]) => (
-            <div key={String(size)} className="flex flex-col items-start gap-2">
-              <div className="grid place-items-center rounded-md bg-primary p-1.5 text-primary-foreground">
-                <KanIcon small={small as boolean} className="text-primary-foreground" style={{ width: size as number, height: size as number }} />
-              </div>
+          {[96, 48, 32, 16].map((size) => (
+            <div key={size} className="flex flex-col items-start gap-2">
+              <img src={size >= 48 ? "/brand/kan-app-icon.svg" : "/brand/kan-favicon.svg"} width={size} height={size} alt="" className={size >= 48 ? "rounded-lg border" : "rounded-sm border"} />
               <span className="kan-num text-data text-muted-foreground">{size}px</span>
             </div>
           ))}
@@ -517,11 +511,12 @@ function Logo() {
       <Section title="Rules">
         <Rules
           items={[
-            <>Use the wordmark wherever there's room; the icon where there isn't (app icons, avatars, favicons).</>,
+            <>Always lowercase, always with the square full stop. Never "KAN." or "Kan." in the logo.</>,
+            <>Use the wordmark wherever there's room; "k." where there isn't (app icons, avatars, favicons).</>,
             <>Ink on light grounds, paper on dark. Never colour the logo, never add effects.</>,
-            <>Clear space: at least the height of the square on every side.</>,
-            <>Minimum size: wordmark 24px tall; icon 16px with the heavier stroke.</>,
-            <>Never redraw or move the square, and never set "KAN" in a font as a substitute.</>,
+            <>Clear space: at least the width of the full stop on every side. Minimum size: wordmark 16px tall, icon 16px.</>,
+            <>Use the files, never retype the name in a font: the spacing and the full stop are drawn, not typed.</>,
+            <>In running text the name is written KAN.</>,
           ]}
         />
       </Section>
