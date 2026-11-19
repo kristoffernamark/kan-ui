@@ -8,7 +8,10 @@ import { Input } from "@/components/ui/input"
 import { KanIcon, KanWordmark } from "@/components/ui/kan-logo"
 import { Segmented, SegmentedItem } from "@/components/ui/segmented"
 import { Stat, StatBars, StatDelta, StatLabel, StatValue } from "@/components/ui/stat"
+import { NavBar, NavItem } from "@/components/ui/nav-bar"
 import { SideHead } from "@/components/ui/side-head"
+import { SideNav, SideNavGroup, SideNavItem } from "@/components/ui/side-nav"
+import { toast } from "@/components/ui/toaster"
 import { Banner, StatusLabel } from "@/components/ui/status"
 
 import { COLOR_GROUPS, PRINCIPLES, RADII, SPACING, SPACING_USAGE, STONE, TYPE_STYLES } from "./data"
@@ -459,6 +462,69 @@ function Components() {
           </Segmented>
         </div>
         <Install name="segmented" />
+      </Section>
+
+      <Section
+        title="Nav bar"
+        note="Logo, items, actions. The active item is marked with the square, not a filled background. Actions never include a primary button: the page owns that. Below the md breakpoint the items move into a floating panel."
+      >
+        <div className="overflow-hidden rounded-lg border">
+          <NavBar
+            className="static"
+            label="Example"
+            brand={<KanWordmark className="h-5" aria-label="kan." />}
+            actions={<Button size="sm">Get in touch</Button>}
+          >
+            <NavItem href="#components" active>
+              Work
+            </NavItem>
+            <NavItem href="#components">Tools</NavItem>
+            <NavItem href="#components">Writing</NavItem>
+          </NavBar>
+          <div className="h-24 bg-surface-1" />
+        </div>
+        <Install name="nav-bar" />
+      </Section>
+
+      <Section title="Side nav" note="For tools and docs with several views. Groups are optional, titled with the plain label.">
+        <div className="flex gap-12">
+          <SideNav className="w-52" label="Example sections">
+            <SideNavGroup>
+              <SideNavItem href="#components" active>
+                Today
+              </SideNavItem>
+              <SideNavItem href="#components">Loops</SideNavItem>
+            </SideNavGroup>
+            <SideNavGroup title="data">
+              <SideNavItem href="#components">Salt network</SideNavItem>
+              <SideNavItem href="#components">Elevation</SideNavItem>
+            </SideNavGroup>
+          </SideNav>
+        </div>
+        <Install name="side-nav" />
+      </Section>
+
+      <Section
+        title="Toast"
+        note={'One sentence, a status square, bottom centre. Confirmations fade after 4 seconds; errors stay until dismissed. Write "Saved", never "Saved successfully!".'}
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button onClick={() => toast.success("Saved")}>Success</Button>
+          <Button
+            onClick={() =>
+              toast("GPX downloaded", { action: { label: "Open", onClick: () => {} } })
+            }
+          >
+            With action
+          </Button>
+          <Button onClick={() => toast.warning("Salting data is 3 hours old")}>Warning</Button>
+          <Button onClick={() => toast.error("Couldn't load streets. Try again in a minute.")}>Error</Button>
+        </div>
+        <p className="mt-4 text-small text-subtle">
+          Mount <Code>{"<Toaster />"}</Code> once at the app root, then call <Code>toast()</Code>,{" "}
+          <Code>toast.success()</Code>, <Code>toast.warning()</Code> or <Code>toast.error()</Code>.
+        </p>
+        <Install name="toaster" />
       </Section>
 
       <Section title="Example page" note="A landing page with a hero and menu, built only from KAN.">

@@ -29,9 +29,9 @@ Not for SeventyOne Consulting work. That has its own brand.
 4. Import `./styles/kan.css` once in `main.tsx`. Remove Vite's default CSS.
 5. Theme: dark by default. Use the `useKanTheme()` hook for a toggle; never force a theme or follow the OS unless the user picks that.
 
-Available from `@kan`: `kan-theme`, `button`, `input` (Input + Field, FieldLabel, FieldHint), `stat` (Stat, StatLabel, StatValue, StatDelta, StatBars), `status` (StatusLabel, Banner), `segmented` (Segmented, SegmentedItem), `kan-logo` (KanWordmark, KanIcon), `side-head` (SideHead, editorial only).
+Available from `@kan`: `kan-theme`, `button`, `input` (Input + Field, FieldLabel, FieldHint), `stat` (Stat, StatLabel, StatValue, StatDelta, StatBars), `status` (StatusLabel, Banner), `segmented` (Segmented, SegmentedItem), `kan-logo` (KanWordmark, KanIcon), `side-head` (SideHead, editorial only), `nav-bar` (NavBar, NavItem), `side-nav` (SideNav, SideNavGroup, SideNavItem), `toaster` (Toaster, toast).
 
-A component KAN doesn't have yet (dialog, menu, table, toast…): add the standard shadcn one (`npx shadcn@latest add dialog`). It picks up KAN's colours automatically via the mapped variables. Then apply the rules below (sharp radii, no shadow unless floating, sentence case, mono for numbers) and tell Kristoffer so it can be added to KAN.
+A component KAN doesn't have yet (dialog, menu, table…): add the standard shadcn one (`npx shadcn@latest add dialog`). It picks up KAN's colours automatically via the mapped variables. Then apply the rules below (sharp radii, no shadow unless floating, sentence case, mono for numbers) and tell Kristoffer so it can be added to KAN.
 
 ## Rules
 
@@ -63,6 +63,11 @@ A component KAN doesn't have yet (dialog, menu, table, toast…): add the standa
 **Motion**
 - Default transitions are already 120ms with KAN easing (`ease-kan`). Enter/exit 200ms, page transitions 320ms via the View Transitions API.
 - Nothing bounces or loops. Reduced motion is handled in `kan.css`.
+
+**Navigation and feedback**
+- Every app gets `NavBar` (logo, items, actions) and, with several views, `SideNav`. When a SideNav lists the views, pass `inlineItems={false}` so they only appear in the mobile menu.
+- The active item is marked with the square, never a filled background. NavBar actions never hold a primary button.
+- Mount `<Toaster />` once at the root and import `toast` from `@/components/ui/toaster`. One sentence per toast; confirmations fade, `toast.error` stays until dismissed.
 
 **Icons and accessibility**
 - Lucide, stroke 1.5, 16px inline (default in Button), 20px standalone. Icon-only buttons need `aria-label`.

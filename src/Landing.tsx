@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import { ArrowRight, Menu, Moon, Sun, X } from "lucide-react"
+import { ArrowRight, Moon, Sun } from "lucide-react"
 
 import { useKanTheme } from "@/hooks/use-kan-theme"
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Stat, StatLabel, StatValue } from "@/components/ui/stat"
 import { SideHead } from "@/components/ui/side-head"
 import { StatusLabel } from "@/components/ui/status"
 import { KanWordmark } from "@/components/ui/kan-logo"
+import { NavBar, NavItem } from "@/components/ui/nav-bar"
 
 /*
  * A landing page built only from KAN.
@@ -29,35 +29,16 @@ const NOW = [
 
 function Header() {
   const { theme, setTheme } = useKanTheme()
-  const [open, setOpen] = useState(false)
-
   return (
-    <header
-      data-kan="bg-background · border (hairline) · h-16"
-      className="sticky top-0 z-20 border-b bg-background"
-    >
-      <div className="mx-auto flex h-16 max-w-[1080px] items-center gap-6 px-4 sm:px-12">
-        <a href="#" data-kan="KanWordmark · currentColor" className="kan-focus rounded-sm" aria-label="KAN, home">
+    <NavBar
+      data-kan="NavBar · square marks the active item"
+      brand={
+        <a href="#" className="kan-focus rounded-sm" aria-label="KAN, home">
           <KanWordmark className="h-6" aria-hidden="true" />
         </a>
-
-        <nav aria-label="Main" className="hidden flex-1 items-center gap-1 md:flex" data-kan="Button ghost">
-          {NAV.map((item, i) => (
-            <Button
-              key={item.href}
-              asChild
-              variant="ghost"
-              className={cn(i === 0 && "text-foreground")}
-            >
-              <a href={item.href} aria-current={i === 0 ? "page" : undefined}>
-                {i === 0 && <span className="size-1.5 bg-foreground" aria-hidden="true" />}
-                {item.label}
-              </a>
-            </Button>
-          ))}
-        </nav>
-
-        <div className="ml-auto flex items-center gap-2">
+      }
+      actions={
+        <>
           <span className="hidden kan-num text-caption text-muted-foreground lg:inline" data-kan="coordinates · map layer">
             59.32° N · 18.07° E
           </span>
@@ -73,43 +54,15 @@ function Header() {
           <Button asChild className="hidden sm:inline-flex" data-kan="secondary · hero owns primary">
             <a href="#about">Get in touch</a>
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <X /> : <Menu />}
-          </Button>
-        </div>
-      </div>
-
-      {open && (
-        <nav
-          aria-label="Main"
-          data-kan="bg-popover · rounded-lg · shadow-popover (floating = only shadow)"
-          className="absolute inset-x-4 top-[calc(100%+8px)] rounded-lg border bg-popover p-2 shadow-popover md:hidden"
-        >
-          {NAV.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="kan-focus flex h-11 items-center rounded-md px-3 text-body text-subtle hover:bg-accent hover:text-foreground"
-            >
-              {item.label}
-            </a>
-          ))}
-          <div className="mt-2 border-t pt-2">
-            <Button asChild className="w-full" size="lg">
-              <a href="#about">Get in touch</a>
-            </Button>
-          </div>
-        </nav>
-      )}
-    </header>
+        </>
+      }
+    >
+      {NAV.map((item, i) => (
+        <NavItem key={item.href} href={item.href} active={i === 0}>
+          {item.label}
+        </NavItem>
+      ))}
+    </NavBar>
   )
 }
 

@@ -144,6 +144,55 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "nav-bar",
+      "type": "registry:ui",
+      "title": "Nav bar",
+      "description": "Top navigation: logo, items with the square on the active one, actions, and a floating menu on mobile.",
+      "registryDependencies": [
+        "@kan/kan-theme",
+        "@kan/button"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/nav-bar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "side-nav",
+      "type": "registry:ui",
+      "title": "Side nav",
+      "description": "Vertical navigation for tools and docs. The active item gets the square.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/side-nav.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toaster",
+      "type": "registry:ui",
+      "title": "Toaster",
+      "description": "One-sentence toasts with a status square. Confirmations fade after 4 s; errors stay until dismissed.",
+      "dependencies": [
+        "sonner"
+      ],
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/toaster.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

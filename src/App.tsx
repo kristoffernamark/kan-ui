@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
-import { Menu, Moon, Sun, X } from "lucide-react"
+import { Moon, Sun } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { useKanTheme } from "@/hooks/use-kan-theme"
 import { Button } from "@/components/ui/button"
 import { KanWordmark } from "@/components/ui/kan-logo"
+import { NavBar, NavItem } from "@/components/ui/nav-bar"
+import { SideNav, SideNavGroup, SideNavItem } from "@/components/ui/side-nav"
+import { Toaster } from "@/components/ui/toaster"
 import { PAGE_COMPONENTS, PAGES, type PageId } from "@/docs/pages"
 
 function readHash(): PageId {
@@ -12,32 +14,17 @@ function readHash(): PageId {
   return (PAGES.some((p) => p.id === h) ? h : "overview") as PageId
 }
 
-function Nav({ current, onNavigate }: { current: PageId; onNavigate?: () => void }) {
-  return (
-    <ul className="flex flex-col gap-0.5">
-      {PAGES.map((p) => (
-        <li key={p.id}>
-          <a
-            href={`#${p.id}`}
-            onClick={onNavigate}
-            aria-current={p.id === current ? "page" : undefined}
-            className={cn(
-              "kan-focus flex h-9 items-center rounded-md px-3 text-small text-subtle transition-colors hover:bg-accent hover:text-foreground",
-              p.id === current && "bg-selected text-foreground"
-            )}
-          >
-            {p.label}
-          </a>
-        </li>
-      ))}
-    </ul>
-  )
-}
+const GROUPS: { title?: string; ids: PageId[] }[] = [
+  { ids: ["overview"] },
+  { title: "foundations", ids: ["colour", "typography", "space", "motion"] },
+  { title: "library", ids: ["components", "logo"] },
+  { title: "guidelines", ids: ["editorial", "guidelines", "build"] },
+]
+const labelOf = (id: PageId) => PAGES.find((p) => p.id === id)?.label ?? id
 
 export default function App() {
   const { theme, setTheme } = useKanTheme()
   const [page, setPage] = useState<PageId>(readHash)
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const onHash = () => {
@@ -64,13 +51,17 @@ export default function App() {
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b bg-background">
-        <div className="mx-auto flex h-16 max-w-[1200px] items-center gap-4 px-4 sm:px-8">
-          <a href="#overview" className="kan-focus rounded-sm" aria-label="KAN, overview">
+      <NavBar
+        label="Sections"
+        inlineItems={false}
+        brand={
+          <a href="#overview" className="kan-focus flex items-center gap-3 rounded-sm" aria-label="KAN, overview">
             <KanWordmark className="h-6" aria-hidden="true" />
+            <span className="hidden kan-label-plain text-muted-foreground sm:inline">design system</span>
           </a>
-          <span className="hidden kan-label-plain text-muted-foreground sm:inline">design system</span>
-          <div className="ml-auto flex items-center gap-2">
+        }
+        actions={
+          <>
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
               <a href="https://github.com/kristoffernamark/kan-ui">GitHub</a>
             </Button>
@@ -82,32 +73,28 @@ export default function App() {
             >
               {theme === "dark" ? <Sun /> : <Moon />}
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <X /> : <Menu />}
-            </Button>
-          </div>
-        </div>
-        {menuOpen && (
-          <nav
-            aria-label="Sections"
-            className="absolute inset-x-4 top-[calc(100%+8px)] rounded-lg border bg-popover p-2 shadow-popover md:hidden"
-          >
-            <Nav current={page} onNavigate={() => setMenuOpen(false)} />
-          </nav>
-        )}
-      </header>
+          </>
+        }
+      >
+        {PAGES.map((p) => (
+          <NavItem key={p.id} href={`#${p.id}`} active={p.id === page}>
+            {p.label}
+          </NavItem>
+        ))}
+      </NavBar>
 
       <div className="mx-auto flex max-w-[1200px] gap-12 px-4 sm:px-8">
-        <nav aria-label="Sections" className="sticky top-16 hidden h-[calc(100vh-4rem)] w-52 shrink-0 py-10 md:block">
-          <Nav current={page} />
-        </nav>
+        <SideNav className="sticky top-16 hidden h-[calc(100vh-4rem)] w-52 shrink-0 overflow-y-auto py-10 md:flex">
+          {GROUPS.map((g, i) => (
+            <SideNavGroup key={i} title={g.title}>
+              {g.ids.map((id) => (
+                <SideNavItem key={id} href={`#${id}`} active={id === page}>
+                  {labelOf(id)}
+                </SideNavItem>
+              ))}
+            </SideNavGroup>
+          ))}
+        </SideNav>
         <main className="min-w-0 flex-1 py-10 sm:py-14">
           <div className="max-w-[880px]">
             <Page />
@@ -117,6 +104,7 @@ export default function App() {
           </footer>
         </main>
       </div>
+      <Toaster />
     </>
   )
 }
