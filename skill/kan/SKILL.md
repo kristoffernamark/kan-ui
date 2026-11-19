@@ -29,7 +29,7 @@ Not for SeventyOne Consulting work. That has its own brand.
 4. Import `./styles/kan.css` once in `main.tsx`. Remove Vite's default CSS.
 5. Theme: dark by default. Use the `useKanTheme()` hook for a toggle; never force a theme or follow the OS unless the user picks that.
 
-Available from `@kan`: `kan-theme`, `button`, `input` (Input + Field, FieldLabel, FieldHint), `stat` (Stat, StatLabel, StatValue, StatDelta, StatBars), `status` (StatusLabel, Banner), `segmented` (Segmented, SegmentedItem).
+Available from `@kan`: `kan-theme`, `button`, `input` (Input + Field, FieldLabel, FieldHint), `stat` (Stat, StatLabel, StatValue, StatDelta, StatBars), `status` (StatusLabel, Banner), `segmented` (Segmented, SegmentedItem), `kan-logo` (KanWordmark, KanIcon), `side-head` (SideHead, editorial only).
 
 A component KAN doesn't have yet (dialog, menu, table, toast…): add the standard shadcn one (`npx shadcn@latest add dialog`). It picks up KAN's colours automatically via the mapped variables. Then apply the rules below (sharp radii, no shadow unless floating, sentence case, mono for numbers) and tell Kristoffer so it can be added to KAN.
 
@@ -46,8 +46,10 @@ A component KAN doesn't have yet (dialog, menu, table, toast…): add the standa
 
 **Type**
 - Instrument Sans for interface and prose, weights 400 and 500 only.
+- Instrument Serif (`font-serif`) for editorial headlines only (portfolio, articles, covers): upright, at most one phrase in italic, may end in the square full stop. Never in tools.
 - IBM Plex Mono for every number, coordinate, timestamp and code: use `kan-num` (mono + tabular figures).
-- Overline labels above values and fields: `kan-label` (mono, 11px, uppercase, tracked).
+- Section labels in tools: `kan-label` (mono, 13px, lowercase, led by the KAN square). Row labels and captions inside a section: `kan-label-plain` (same, no square). Never uppercase tracked labels: they read as generic.
+- Form field labels: plain sentence case sans (`FieldLabel`), no square.
 - Sizes: `text-display-xl`, `text-display` (portfolio/writing only), `text-title`, `text-heading`, `text-body` (default), `text-small`, `text-caption`; data: `text-metric-xl`, `text-metric`, `text-data`.
 - Sentence case everywhere. Verb-first button labels, 1–3 words. No "successfully", "please" or exclamation marks.
 
@@ -66,6 +68,14 @@ A component KAN doesn't have yet (dialog, menu, table, toast…): add the standa
 - Lucide, stroke 1.5, 16px inline (default in Button), 20px standalone. Icon-only buttons need `aria-label`.
 - Focus is always visible: use `kan-focus` on custom interactive elements.
 - Never signal state with colour alone: a status dot always has a word.
+
+**The square is the signature**
+- One small square marks what matters: the logo's full stop, section labels, status, the current point in a chart, the active nav item, the end of a headline or article. Never decoration.
+- Status markers are squares, not round dots. `radius-full` stays for avatars only.
+
+**Editorial surfaces (portfolio, writing, covers)**
+- Structure with side-heads (`SideHead`: the label in its own margin column), space and hairlines, not cards.
+- The map layer: coordinates as quiet context, contour lines from real elevation data at 5–7% opacity, at most one scale bar or registration cross. Never in tools or forms.
 
 **Restraint**
 - Prefer fewer elements. If a control can be a single quiet line of text, make it one.

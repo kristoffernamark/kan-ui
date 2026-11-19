@@ -69,7 +69,7 @@ export default function App() {
           <a href="#overview" className="kan-focus rounded-sm" aria-label="KAN, overview">
             <KanWordmark className="h-6" aria-hidden="true" />
           </a>
-          <span className="hidden kan-label text-muted-foreground sm:inline">Design system</span>
+          <span className="hidden kan-label-plain text-muted-foreground sm:inline">design system</span>
           <div className="ml-auto flex items-center gap-2">
             <Button asChild variant="ghost" className="hidden sm:inline-flex">
               <a href="https://github.com/kristoffernamark/kan-ui">GitHub</a>

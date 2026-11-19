@@ -74,7 +74,7 @@ export function CodeBlock({ code, label }: { code: string; label?: string }) {
   return (
     <div className="overflow-hidden rounded-lg border bg-surface-1">
       <div className="flex h-9 items-center justify-between border-b pr-1 pl-3">
-        <span className="kan-label text-muted-foreground">{label ?? "Code"}</span>
+        <span className="kan-label-plain text-muted-foreground">{label ?? "Code"}</span>
         <Button
           variant="ghost"
           size="sm"

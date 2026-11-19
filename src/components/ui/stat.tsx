@@ -81,13 +81,15 @@ function StatBars({
   const active = activeIndex ?? values.length - 1
   return (
     <div data-slot="stat-bars" className={cn("mt-4", className)} {...props}>
-      <div className="flex h-10 items-end gap-1" aria-hidden="true">
+      <div className="mt-3 flex h-10 items-end gap-1" aria-hidden="true">
         {values.map((v, i) => (
           <span
             key={i}
-            className={cn("flex-1 rounded-sm", i === active ? "bg-data-active" : "bg-data-muted")}
+            className={cn("relative flex-1 rounded-sm", i === active ? "bg-data-active" : "bg-data-muted")}
             style={{ height: `${Math.max((v / max) * 100, 4)}%` }}
-          />
+          >
+            {i === active && <span className="absolute -top-3 left-1/2 size-1.5 -translate-x-1/2 bg-data-active" />}
+          </span>
         ))}
       </div>
       {(startLabel || endLabel) && (

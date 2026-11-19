@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { KanIcon, KanWordmark } from "@/components/ui/kan-logo"
 import { Segmented, SegmentedItem } from "@/components/ui/segmented"
 import { Stat, StatBars, StatDelta, StatLabel, StatValue } from "@/components/ui/stat"
+import { SideHead } from "@/components/ui/side-head"
 import { Banner, StatusLabel } from "@/components/ui/status"
 
 import { COLOR_GROUPS, PRINCIPLES, RADII, SPACING, SPACING_USAGE, STONE, TYPE_STYLES } from "./data"
@@ -21,6 +22,7 @@ export const PAGES = [
   { id: "motion", label: "Motion" },
   { id: "components", label: "Components" },
   { id: "logo", label: "Logo" },
+  { id: "editorial", label: "Editorial" },
   { id: "guidelines", label: "Writing and access" },
   { id: "build", label: "Build with KAN" },
 ] as const
@@ -52,7 +54,7 @@ function Overview() {
         </div>
       </header>
 
-      <Section title="Principles" note="Seven rules that decide every screen. When in doubt, choose the quieter option.">
+      <Section title="Principles" note="Eight rules that decide every screen. When in doubt, choose the quieter option.">
         <ol className="max-w-[72ch] divide-y border-y">
           {PRINCIPLES.map(([title, body], i) => (
             <li key={title} className="grid gap-1 py-4 sm:grid-cols-[48px_220px_1fr] sm:gap-4">
@@ -113,9 +115,9 @@ function Colour() {
         <Section key={group.title} title={group.title} note={group.note}>
           <div className="overflow-hidden rounded-lg border">
             <div className="hidden grid-cols-[1.2fr_1fr_1fr] border-b bg-surface-1 md:grid">
-              <span className="kan-label px-3 py-2 text-muted-foreground">Token</span>
-              <span className="kan-label border-l px-3 py-2 text-muted-foreground">Dark</span>
-              <span className="kan-label border-l px-3 py-2 text-muted-foreground">Light</span>
+              <span className="kan-label-plain px-3 py-2 text-muted-foreground">Token</span>
+              <span className="kan-label-plain border-l px-3 py-2 text-muted-foreground">Dark</span>
+              <span className="kan-label-plain border-l px-3 py-2 text-muted-foreground">Light</span>
             </div>
             {group.tokens.map((t) => (
               <div key={t.name} className="grid border-b last:border-b-0 md:grid-cols-[1.2fr_1fr_1fr]">
@@ -181,23 +183,29 @@ function Typography() {
   return (
     <>
       <PageHeader label="Foundations" title="Typography">
-        Two families. Instrument Sans for everything you read; IBM Plex Mono for everything you measure. Weights 400 and 500
-        only. Both are self-hosted, so no requests go to Google.
+        Instrument Sans for everything you read, IBM Plex Mono for everything you measure, and Instrument Serif for the
+        editorial voice. Weights 400 and 500 only. All self-hosted, so no requests go to Google.
       </PageHeader>
 
       <Section title="Families">
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-3">
           <div className="rounded-lg border p-5">
-            <p className="kan-label text-subtle">Sans</p>
+            <p className="kan-label-plain text-subtle">sans</p>
             <p className="mt-3 text-display font-medium">Aa Åå Öö</p>
             <p className="mt-2 font-mono text-data text-muted-foreground">Instrument Sans · font-sans</p>
             <p className="mt-3 text-small text-subtle">Interface and prose. Tight tracking at large sizes, none in body.</p>
           </div>
           <div className="rounded-lg border p-5">
-            <p className="kan-label text-subtle">Mono</p>
+            <p className="kan-label-plain text-subtle">mono</p>
             <p className="kan-num mt-3 text-display font-medium">0123 4:56</p>
             <p className="mt-2 font-mono text-data text-muted-foreground">IBM Plex Mono · kan-num / font-mono</p>
-            <p className="mt-3 text-small text-subtle">Numbers, data, coordinates, code and overline labels.</p>
+            <p className="mt-3 text-small text-subtle">Numbers, data, coordinates, code and labels.</p>
+          </div>
+          <div className="rounded-lg border p-5">
+            <p className="kan-label-plain text-subtle">serif</p>
+            <p className="mt-3 font-serif text-display">Aa <i>Åå</i> Öö</p>
+            <p className="mt-2 font-mono text-data text-muted-foreground">Instrument Serif · font-serif</p>
+            <p className="mt-3 text-small text-subtle">Editorial headlines only: portfolio and writing. Never in tools.</p>
           </div>
         </div>
       </Section>
@@ -376,7 +384,7 @@ function Components() {
 
       <Section
         title="Input and field"
-        note="The label is always visible, mono and uppercase. The placeholder is a real example. An error says what happened and how to fix it."
+        note="The label is always visible: plain, sentence case. The placeholder is a real example. An error says what happened and how to fix it."
       >
         <div className="grid gap-6 sm:grid-cols-3">
           <Field>
@@ -400,7 +408,7 @@ function Components() {
 
       <Section
         title="Stat"
-        note="One number that matters, always with its unit. Colour the change only when the direction is genuinely good or bad. One active bar."
+        note="One number that matters, always with its unit. Colour the change only when the direction is genuinely good or bad. One active bar, marked with the square."
       >
         <div className="grid items-start gap-6 sm:grid-cols-3">
           <Stat>
@@ -423,7 +431,7 @@ function Components() {
         <Install name="stat" />
       </Section>
 
-      <Section title="Status" note="A dot plus a word: the word carries the meaning on its own. Banners are one sentence.">
+      <Section title="Status" note="A square plus a word: the word carries the meaning on its own. Banners are one sentence.">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-4">
             <StatusLabel>Draft</StatusLabel>
@@ -546,6 +554,69 @@ function Logo() {
   )
 }
 
+/* ---------------- Editorial ---------------- */
+
+function Editorial() {
+  return (
+    <>
+      <PageHeader label="Guidelines" title="Editorial">
+        The portfolio and the writing are where KAN meets people, so they get a voice the tools don't need: a serif
+        headline, side-heads instead of cards, and a quiet map layer.
+      </PageHeader>
+
+      <Section title="Serif headlines" note="Instrument Serif, upright, with one phrase in italic at most. The square full stop ends a headline the way it ends the logo.">
+        <p className="max-w-[14ch] font-serif text-[64px] leading-[64px] sm:text-[80px] sm:leading-[80px]">
+          I build the tools I wish <i>product people</i> had
+          <span className="ml-1 inline-block size-3 bg-foreground align-baseline" aria-hidden="true" />
+        </p>
+      </Section>
+
+      <Section title="Side-heads" note="On editorial pages, a section's label sits in its own margin column and the content lines up beside it. No card around it.">
+        <SideHead label="Now building">
+          <ul className="divide-y">
+            {[
+              ["Salted streets", "Winter loops from the door", "success", "Live"],
+              ["Hikyaku", "Training and terrain", "warning", "In progress"],
+              ["KAN", "The system behind this page", "success", "Live"],
+            ].map(([name, note, tone, status]) => (
+              <li key={name} className="flex items-baseline justify-between gap-4 py-3 first:pt-0">
+                <div>
+                  <p className="font-medium">{name}</p>
+                  <p className="text-small text-muted-foreground">{note}</p>
+                </div>
+                <StatusLabel tone={tone as "success" | "warning"}>{status}</StatusLabel>
+              </li>
+            ))}
+          </ul>
+        </SideHead>
+        <p className="mt-6 font-mono text-caption text-muted-foreground">npx shadcn@latest add @kan/side-head</p>
+      </Section>
+
+      <Section title="The map layer" note="KAN's own texture, from what the tools are about: terrain, routes and places. Editorial surfaces only.">
+        <Rules
+          items={[
+            <>Coordinates as quiet context: <span className="kan-num">59.32° N · 18.07° E</span> in a header or caption.</>,
+            <>Contour lines behind covers and heroes, at 5–7% opacity, drawn from real elevation data (Lantmäteriet), never invented.</>,
+            <>Scale bars and registration crosses as structure on large surfaces. At most one of each.</>,
+            <>Charts read like map legends: outlined past values, one filled current value with a square marker.</>,
+            <>Never in forms or dense tool screens. If it competes with content, remove it.</>,
+          ]}
+        />
+      </Section>
+
+      <Section title="Fewer cards">
+        <Rules
+          items={[
+            <>Cards belong in tools, where they group controls and figures.</>,
+            <>On editorial pages, structure comes from space, side-heads and hairlines.</>,
+            <>A big number can stand on its own. It doesn't need a box to be important.</>,
+          ]}
+        />
+      </Section>
+    </>
+  )
+}
+
 /* ---------------- Writing and access ---------------- */
 
 function Guidelines() {
@@ -646,6 +717,7 @@ export const PAGE_COMPONENTS: Record<PageId, () => React.JSX.Element> = {
   motion: Motion,
   components: Components,
   logo: Logo,
+  editorial: Editorial,
   guidelines: Guidelines,
   build: Build,
 }

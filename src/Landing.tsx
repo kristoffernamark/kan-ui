@@ -5,6 +5,7 @@ import { useKanTheme } from "@/hooks/use-kan-theme"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Stat, StatLabel, StatValue } from "@/components/ui/stat"
+import { SideHead } from "@/components/ui/side-head"
 import { StatusLabel } from "@/components/ui/status"
 import { KanWordmark } from "@/components/ui/kan-logo"
 
@@ -49,6 +50,7 @@ function Header() {
               className={cn(i === 0 && "text-foreground")}
             >
               <a href={item.href} aria-current={i === 0 ? "page" : undefined}>
+                {i === 0 && <span className="size-1.5 bg-foreground" aria-hidden="true" />}
                 {item.label}
               </a>
             </Button>
@@ -56,6 +58,9 @@ function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <span className="hidden kan-num text-caption text-muted-foreground lg:inline" data-kan="coordinates · map layer">
+            59.32° N · 18.07° E
+          </span>
           <Button
             variant="ghost"
             size="icon"
@@ -111,20 +116,18 @@ function Header() {
 function Hero() {
   return (
     <section className="mx-auto max-w-[1080px] px-4 pt-16 pb-16 sm:px-12 sm:pt-24">
-      <div className="grid items-end gap-12 lg:grid-cols-[1fr_360px]">
+      <div className="grid items-end gap-12 lg:grid-cols-[1fr_380px]">
         <div>
-          <p data-kan="kan-label · text-subtle" className="kan-label mb-4 text-subtle">
-            Product manager · Stockholm
-          </p>
           <h1
-            data-kan="text-display-xl · text-foreground · Instrument Sans 500"
-            className="max-w-[14ch] text-display sm:text-display-xl"
+            data-kan="font-serif · 80px · italic phrase · square stop"
+            className="max-w-[13ch] font-serif text-[56px] leading-[56px] sm:text-[80px] sm:leading-[80px]"
           >
-            I build the tools I wish product people had.
+            I build the tools I wish <i>product people</i> had
+            <span className="ml-1 inline-block size-3 bg-foreground" aria-hidden="true" />
           </h1>
           <p
             data-kan="text-body · text-subtle · max-w-[52ch]"
-            className="mt-6 max-w-[52ch] text-subtle"
+            className="mt-7 max-w-[52ch] text-subtle"
           >
             Ten years shaping products in Swedish banking, fintech and marketplaces. Now I also make small,
             precise tools for planning, prioritising and running.
@@ -141,26 +144,21 @@ function Hero() {
           </div>
         </div>
 
-        <aside
-          aria-label="Currently building"
-          data-kan="bg-card · border · rounded-lg · p-5"
-          className="rounded-lg border bg-card p-5"
-        >
-          <p className="kan-label mb-4 text-subtle">Now building</p>
-          <ul className="divide-y" data-kan="rows: divide-y hairlines, not cards">
+        <SideHead label={<>Now<br />building</>} className="sm:grid-cols-[88px_1fr] sm:gap-4" data-kan="SideHead · no card">
+          <ul className="-mt-3 divide-y">
             {NOW.map((item) => (
-              <li key={item.name} className="flex items-start justify-between gap-4 py-3 first:pt-0 last:pb-0">
+              <li key={item.name} className="flex items-start justify-between gap-4 py-3">
                 <div className="min-w-0">
                   <p className="text-body font-medium">{item.name}</p>
                   <p className="text-small text-muted-foreground">{item.note}</p>
                 </div>
-                <StatusLabel tone={item.tone} className="shrink-0 pt-0.5" data-kan="StatusLabel · dot + word">
+                <StatusLabel tone={item.tone} className="shrink-0 pt-0.5" data-kan="StatusLabel · square + word">
                   {item.status}
                 </StatusLabel>
               </li>
             ))}
           </ul>
-        </aside>
+        </SideHead>
       </div>
     </section>
   )

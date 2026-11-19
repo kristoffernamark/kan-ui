@@ -3,7 +3,8 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
-const dotVariants = cva("size-1.5 shrink-0 rounded-full", {
+/* The KAN square, not a round dot. */
+const dotVariants = cva("size-1.5 shrink-0", {
   variants: {
     tone: {
       neutral: "bg-muted-foreground",
@@ -15,7 +16,7 @@ const dotVariants = cva("size-1.5 shrink-0 rounded-full", {
   defaultVariants: { tone: "neutral" },
 })
 
-/** A dot plus a word. The word must carry the meaning on its own. */
+/** A square plus a word. The word must carry the meaning on its own. */
 function StatusLabel({
   className,
   tone,

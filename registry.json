@@ -7,7 +7,7 @@
       "name": "kan-theme",
       "type": "registry:item",
       "title": "KAN theme",
-      "description": "Stone palette (dark default, light via data-theme), Instrument Sans + IBM Plex Mono, KAN type scale, radii, motion and utilities, mapped onto the shadcn/ui variables.",
+      "description": "Stone palette (dark default, light via data-theme), Instrument Sans + IBM Plex Mono (+ Instrument Serif for editorial), KAN type scale, radii, motion and utilities, mapped onto the shadcn/ui variables.",
       "dependencies": [
         "tailwindcss",
         "@tailwindcss/vite",
@@ -17,7 +17,8 @@
         "radix-ui",
         "lucide-react",
         "@fontsource-variable/instrument-sans",
-        "@fontsource/ibm-plex-mono"
+        "@fontsource/ibm-plex-mono",
+        "@fontsource/instrument-serif"
       ],
       "files": [
         {
@@ -125,6 +126,21 @@
       "files": [
         {
           "path": "src/components/ui/kan-logo.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "side-head",
+      "type": "registry:ui",
+      "title": "Side-head",
+      "description": "Editorial section: the label in its own margin column. Portfolio and writing only.",
+      "registryDependencies": [
+        "@kan/kan-theme"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/side-head.tsx",
           "type": "registry:ui"
         }
       ]

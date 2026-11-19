@@ -8,6 +8,8 @@
 @import "@fontsource-variable/instrument-sans";
 @import "@fontsource/ibm-plex-mono/400.css";
 @import "@fontsource/ibm-plex-mono/500.css";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
 
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
 
@@ -169,6 +171,8 @@
   /* Type */
   --font-sans: "Instrument Sans Variable", "Instrument Sans", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* Editorial only: portfolio and writing headings. Never in tools. */
+  --font-serif: "Instrument Serif", Georgia, serif;
 
   --text-display-xl: 56px;
   --text-display-xl--line-height: 60px;
@@ -195,9 +199,9 @@
   --text-metric--letter-spacing: -0.01em;
   --text-data: 13px;
   --text-data--line-height: 20px;
-  --text-label: 11px;
-  --text-label--line-height: 16px;
-  --text-label--letter-spacing: 0.06em;
+  --text-label: 13px;
+  --text-label--line-height: 20px;
+  --text-label--letter-spacing: 0;
 
   /* Shape */
   --radius-sm: 2px;
@@ -213,13 +217,44 @@
 }
 
 /* ---------- KAN utilities ---------- */
+/* Section label in tools: lowercase mono, led by the KAN square. */
 @utility kan-label {
   font-family: var(--font-mono);
   font-size: var(--text-label);
   line-height: var(--text-label--line-height);
-  letter-spacing: var(--text-label--letter-spacing);
-  font-weight: 500;
-  text-transform: uppercase;
+  font-weight: 400;
+  text-transform: lowercase;
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    vertical-align: 1px;
+    background: var(--kan-text);
+  }
+}
+
+/* Same voice without the square: row labels and small captions inside a section. */
+@utility kan-label-plain {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 400;
+  text-transform: lowercase;
+}
+
+/* Editorial side-head: the label sits in its own margin column. */
+@utility kan-sidehead {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--kan-border-strong);
+  @media (min-width: 640px) {
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+  }
 }
 
 @utility kan-num {

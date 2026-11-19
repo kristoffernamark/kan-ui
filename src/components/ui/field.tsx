@@ -10,12 +10,12 @@ function Field({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-/** Mono, uppercase overline label. Always visible; never replaced by a placeholder. */
+/** Plain sentence-case label. Always visible; never replaced by a placeholder. */
 function FieldLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   return (
     <LabelPrimitive.Root
       data-slot="field-label"
-      className={cn("kan-label text-subtle select-none", className)}
+      className={cn("text-small font-medium text-subtle select-none", className)}
       {...props}
     />
   )

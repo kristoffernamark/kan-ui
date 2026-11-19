@@ -68,9 +68,16 @@ export const STONE = [
   ["50", "#eeeae3"], ["25", "#f6f4ef"], ["10", "#fbfaf7"], ["0", "#ffffff"],
 ] as const
 
-export type TypeStyle = { name: string; className: string; family: "sans" | "mono"; sample: string; usage: string }
+export type TypeStyle = { name: string; className: string; family: "sans" | "mono" | "serif"; sample: string; usage: string }
 
 export const TYPE_STYLES: { title: string; styles: TypeStyle[] }[] = [
+  {
+    title: "Editorial",
+    styles: [
+      { name: "serif-display", className: "font-serif text-[80px] leading-[80px]", family: "serif", sample: "Now building", usage: "Portfolio and article headlines. Italic for one emphasised phrase. Never in tools." },
+      { name: "serif-title", className: "font-serif text-display", family: "serif", sample: "Field notes", usage: "Page titles on editorial pages." },
+    ],
+  },
   {
     title: "Display",
     styles: [
@@ -94,7 +101,8 @@ export const TYPE_STYLES: { title: string; styles: TypeStyle[] }[] = [
       { name: "metric-xl", className: "text-metric-xl kan-num font-medium", family: "mono", sample: "42.6", usage: "The one hero number on a screen." },
       { name: "metric", className: "text-metric kan-num font-medium", family: "mono", sample: "5:12 /km", usage: "Stat tiles and key values." },
       { name: "data", className: "text-data kan-num", family: "mono", sample: "59.3293, 18.0686", usage: "Numbers in tables, coordinates, timestamps." },
-      { name: "label", className: "kan-label", family: "mono", sample: "Distance", usage: "Overline labels above values and fields." },
+      { name: "label", className: "kan-label text-subtle", family: "mono", sample: "weekly distance", usage: "Section labels in tools. Lowercase, led by the square." },
+      { name: "label-plain", className: "kan-label-plain text-subtle", family: "mono", sample: "avg pace", usage: "Row labels and captions inside a section. No square." },
     ],
   },
 ]
@@ -128,4 +136,5 @@ export const PRINCIPLES = [
   ["Restraint", "Fewer elements, quieter interactions. If a control can be a single quiet line of text, it should be. One primary button per view."],
   ["Honest data", "Never frame a number so it misleads. Show units, show sources, label what's estimated."],
   ["The user picks the theme", "Dark is the default. Light is a full theme, never a degraded one. Neither is forced."],
+  ["The square is the signature", "One small square marks what matters: the full stop in the logo, section labels, status, the current point in a chart, the active item. Never decoration, never more than one job per element."],
 ] as const
