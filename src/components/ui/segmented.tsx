@@ -26,7 +26,7 @@ function Segmented({ className, value, defaultValue, onValueChange, ...props }: 
         if (value === undefined) setInner(next)
         onValueChange?.(next)
       }}
-      className={cn("inline-flex h-9 items-center gap-0.5 rounded-md border bg-surface-1 p-0.5", className)}
+      className={cn("inline-flex h-(--kan-control-md) items-center gap-0.5 rounded-md border bg-surface-1 p-0.5", className)}
       {...props}
     />
   )
@@ -38,7 +38,7 @@ function SegmentedItem({ className, ...props }: React.ComponentProps<typeof Togg
       data-slot="segmented-item"
       className={cn(
         "h-full rounded-sm px-3 text-small font-medium text-subtle transition-colors hover:text-foreground",
-        "data-[state=on]:bg-selected data-[state=on]:text-foreground",
+        "data-[state=on]:bg-brand-soft data-[state=on]:text-foreground data-[state=on]:shadow-[inset_0_0_0_1px_var(--kan-selected-ring)]",
         "focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring",
         className
       )}

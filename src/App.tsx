@@ -18,7 +18,7 @@ const GROUPS: { title?: string; ids: PageId[] }[] = [
   { ids: ["overview"] },
   { title: "foundations", ids: ["colour", "typography", "space", "motion"] },
   { title: "library", ids: ["components", "logo"] },
-  { title: "guidelines", ids: ["editorial", "guidelines", "build"] },
+  { title: "guidelines", ids: ["modes", "editorial", "guidelines", "build"] },
 ]
 const labelOf = (id: PageId) => PAGES.find((p) => p.id === id)?.label ?? id
 

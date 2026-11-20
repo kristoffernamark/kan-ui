@@ -31,13 +31,13 @@ function SideNavItem({
       data-slot="side-nav-item"
       aria-current={active ? "page" : undefined}
       className={cn(
-        "kan-focus flex h-9 items-center gap-2 rounded-md px-3 text-small text-subtle transition-colors hover:bg-accent hover:text-foreground",
+        "kan-focus flex h-(--kan-control-md) items-center gap-2 rounded-md px-3 text-small text-subtle transition-colors hover:bg-accent hover:text-foreground",
         active && "text-foreground",
         className
       )}
       {...props}
     >
-      <span className={cn("size-1.5 shrink-0 bg-foreground", !active && "invisible")} aria-hidden="true" />
+      <span className={cn("size-1.5 shrink-0 bg-brand", !active && "invisible")} aria-hidden="true" />
       <Slot.Slottable>{children}</Slot.Slottable>
     </Comp>
   )

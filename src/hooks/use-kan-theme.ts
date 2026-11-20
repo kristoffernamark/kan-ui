@@ -4,30 +4,47 @@ export type KanTheme = "dark" | "light"
 
 const KEY = "kan-theme"
 
-function read(): KanTheme {
+function saved(): KanTheme | null {
   try {
-    return localStorage.getItem(KEY) === "light" ? "light" : "dark"
+    const v = localStorage.getItem(KEY)
+    return v === "light" || v === "dark" ? v : null
   } catch {
-    return "dark"
+    return null
   }
 }
 
+function system(): KanTheme {
+  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"
+}
+
 /**
- * KAN is dark by default. The theme is the user's choice, never the product's:
- * we don't follow the OS unless the user picks it, and we remember their pick.
+ * The theme is the user's choice, and we remember their pick.
+ * Until they pick:
+ *  - personal mode (default) starts dark;
+ *  - product mode (`followSystem: true`) follows the device, because
+ *    customers expect an app to match the rest of their phone or computer.
  */
-export function useKanTheme() {
-  const [theme, setThemeState] = useState<KanTheme>(read)
+export function useKanTheme({ followSystem = false }: { followSystem?: boolean } = {}) {
+  const [picked, setPicked] = useState<KanTheme | null>(saved)
+  const [sys, setSys] = useState<KanTheme>(system)
 
   useEffect(() => {
-    const root = document.documentElement
-    if (theme === "light") root.setAttribute("data-theme", "light")
-    else root.removeAttribute("data-theme")
+    if (!followSystem) return
+    const mq = window.matchMedia("(prefers-color-scheme: light)")
+    const on = () => setSys(mq.matches ? "light" : "dark")
+    mq.addEventListener("change", on)
+    return () => mq.removeEventListener("change", on)
+  }, [followSystem])
+
+  const theme: KanTheme = picked ?? (followSystem ? sys : "dark")
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme)
   }, [theme])
 
   const setTheme = useCallback((next: KanTheme) => {
     const apply = () => {
-      setThemeState(next)
+      setPicked(next)
       try {
         localStorage.setItem(KEY, next)
       } catch {

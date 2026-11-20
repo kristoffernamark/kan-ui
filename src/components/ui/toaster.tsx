@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
  */
 
 function Square({ className }: { className?: string }) {
-  return <span className={cn("size-1.5 shrink-0 bg-muted-foreground", className)} aria-hidden="true" />
+  return <span className={cn("size-(--kan-status-square) shrink-0 bg-muted-foreground", className)} aria-hidden="true" />
 }
 
 function Toaster(props: React.ComponentProps<typeof Sonner>) {
@@ -38,8 +38,8 @@ function Toaster(props: React.ComponentProps<typeof Sonner>) {
           title: "text-small font-medium",
           description: "text-small text-subtle",
           actionButton:
-            "kan-focus h-7 shrink-0 rounded-md border border-border-strong px-2 text-small font-medium text-foreground hover:bg-accent",
-          cancelButton: "kan-focus h-7 shrink-0 rounded-md px-2 text-small text-subtle hover:text-foreground",
+            "kan-focus h-(--kan-control-sm) shrink-0 rounded-md border border-border-strong px-2 text-small font-medium text-foreground hover:bg-accent",
+          cancelButton: "kan-focus h-(--kan-control-sm) shrink-0 rounded-md px-2 text-small text-subtle hover:text-foreground",
           closeButton:
             "kan-focus !static !order-last !ml-1 !size-6 !translate-x-0 !translate-y-0 !rounded-sm !border-0 !bg-transparent !text-subtle hover:!bg-accent hover:!text-foreground [&_svg]:!size-3.5",
         },

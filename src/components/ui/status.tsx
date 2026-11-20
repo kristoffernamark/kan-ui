@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 /* The KAN square, not a round dot. */
-const dotVariants = cva("size-1.5 shrink-0", {
+const dotVariants = cva("size-(--kan-status-square) shrink-0", {
   variants: {
     tone: {
       neutral: "bg-muted-foreground",

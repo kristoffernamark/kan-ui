@@ -25,6 +25,7 @@ export const PAGES = [
   { id: "motion", label: "Motion" },
   { id: "components", label: "Components" },
   { id: "logo", label: "Logo" },
+  { id: "modes", label: "Personal and product" },
   { id: "editorial", label: "Editorial" },
   { id: "guidelines", label: "Writing and access" },
   { id: "build", label: "Build with KAN" },
@@ -683,6 +684,119 @@ function Editorial() {
   )
 }
 
+/* ---------------- Personal and product ---------------- */
+
+function ModeSample({ mode, theme }: { mode: "personal" | "product"; theme: "dark" | "light" }) {
+  const [unit, setUnit] = React.useState("km")
+  return (
+    <div data-mode={mode === "product" ? "product" : undefined} data-theme={theme} className="rounded-lg border bg-background p-5 text-foreground">
+      <p className="mb-4 font-mono text-caption text-muted-foreground">
+        {mode} · {theme}
+      </p>
+      <div className="rounded-lg border bg-card p-4">
+        <p className="kan-label text-subtle">This week</p>
+        <p className="mt-2 kan-num text-metric-xl">
+          10.1 <span className="font-sans text-small text-muted-foreground">/ 42.0 km</span>
+        </p>
+        <div className="mt-4 flex flex-col gap-2 border-t pt-3">
+          <div className="flex items-center justify-between">
+            <span className="kan-label-plain text-subtle">Thu · Distans</span>
+            <StatusLabel tone="success">Done as planned</StatusLabel>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="kan-label-plain text-subtle">Sat · Långpass</span>
+            <StatusLabel>Planned</StatusLabel>
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <Button variant="primary">Add workout</Button>
+        <Button>Today</Button>
+        <Segmented value={unit} onValueChange={setUnit} aria-label="Unit">
+          <SegmentedItem value="km">km</SegmentedItem>
+          <SegmentedItem value="mi">mi</SegmentedItem>
+        </Segmented>
+      </div>
+    </div>
+  )
+}
+
+function Modes() {
+  return (
+    <>
+      <PageHeader label="Guidelines" title="Personal and product">
+        KAN has two modes. Personal is for tools you build for yourself and people like you: dense, dark, monochrome.
+        Product is for apps other people use: the same palette and type, tuned so a first-time customer understands it.
+      </PageHeader>
+
+      <Section title="Side by side" note="The same components, nothing changed but the mode.">
+        <div className="grid gap-4 lg:grid-cols-2">
+          <ModeSample mode="personal" theme="dark" />
+          <ModeSample mode="product" theme="light" />
+          <ModeSample mode="personal" theme="light" />
+          <ModeSample mode="product" theme="dark" />
+        </div>
+      </Section>
+
+      <Section title="What changes">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-small">
+            <thead className="text-muted-foreground">
+              <tr className="border-b">
+                <th className="py-2 pr-4 font-normal"></th>
+                <th className="py-2 pr-4 font-normal">Personal</th>
+                <th className="py-2 font-normal">Product</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {[
+                ["Colour", "Monochrome. Brightness is emphasis.", "One brand accent for the primary action, today and progress. Status colours unchanged."],
+                ["Labels", "Lowercase mono, led by a square.", "Sentence-case sans, medium weight. Mono stays for numbers."],
+                ["Base size", "15px body, 13px small.", "16px body, 14px small."],
+                ["Targets", "Controls 28 / 36 / 44px.", "Controls 36 / 44 / 48px. Nothing smaller than 44px to tap."],
+                ["Status", "6px square plus a word.", "10px square plus a word, always visible."],
+                ["Theme", "Dark until the user picks.", "Follows the device until the user picks."],
+                ["Help", "Experts know the terms.", "One line of explanation under anything a newcomer won't know."],
+                ["Surfaces", "Subtle layers.", "Stronger layers and borders in dark, so cards read at a glance."],
+              ].map(([k, a, b]) => (
+                <tr key={k} className="align-top">
+                  <td className="py-3 pr-4 font-medium">{k}</td>
+                  <td className="py-3 pr-4 text-subtle">{a}</td>
+                  <td className="py-3 text-subtle">{b}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section title="Turn it on">
+        <CodeBlock label="setup" code={`<html data-mode="product">
+
+/* Your product's accent: one hue, checked at 4.5:1 for text on it */
+[data-mode="product"]               { --kan-brand: #3d63dd; --kan-brand-soft: #e4eafb; }
+[data-mode="product"]:not([data-theme="light"]) { --kan-brand: #8fa9ff; --kan-brand-soft: #1d2440; }
+
+// React: follow the device until the user picks
+const { theme, setTheme } = useKanTheme({ followSystem: true })`} />
+      </Section>
+
+      <Section title="Rules for product mode">
+        <Rules
+          items={[
+            <>One accent per product. It marks the primary action, where you are and progress, nothing else. Never use it for status.</>,
+            <>Status always has a word next to the square. Colour never carries meaning on its own.</>,
+            <>Format for the reader's locale: Swedish users get <span className="kan-num">20 nov</span>, <span className="kan-num">10,1 km</span> and a 24-hour clock. Use <Code>Intl</Code>, never hand-built strings.</>,
+            <>Explain the expert terms the first time they appear: load, form, pace zones. One line, under the value.</>,
+            <>Nothing important only on hover. Touch has no hover.</>,
+            <>The square signature stays: in the logo, the today marker and status. It leaves the labels.</>,
+          ]}
+        />
+      </Section>
+    </>
+  )
+}
+
 /* ---------------- Writing and access ---------------- */
 
 function Guidelines() {
@@ -783,6 +897,7 @@ export const PAGE_COMPONENTS: Record<PageId, () => React.JSX.Element> = {
   motion: Motion,
   components: Components,
   logo: Logo,
+  modes: Modes,
   editorial: Editorial,
   guidelines: Guidelines,
   build: Build,

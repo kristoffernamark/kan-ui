@@ -1,6 +1,9 @@
 /*
  * KAN — theme for Tailwind v4 + shadcn/ui
  * Stone palette. Dark is the default (:root); light via data-theme="light" on <html>.
+ * Two modes: personal (default) for your own tools, product (data-mode="product" on <html>)
+ * for apps other people use. Same palette and fonts; product adds one accent, sans labels,
+ * a 16px base, 44px targets and larger status squares.
  * Source of truth: the KAN design system. Change tokens there first, then here.
  */
 
@@ -83,6 +86,73 @@
 }
 
 
+/* ---------- Mode: personal (default) ----------
+ * Everything that differs between modes is a variable, so components never branch. */
+:root,
+[data-theme] {
+  --kan-brand: var(--kan-fill-primary);
+  --kan-on-brand: var(--kan-on-primary);
+  --kan-brand-soft: var(--kan-fill-selected);
+  --kan-selected-ring: transparent;
+  --kan-fs-body: 15px;
+  --kan-lh-body: 24px;
+  --kan-fs-small: 13px;
+  --kan-lh-small: 20px;
+  --kan-control-sm: 28px;
+  --kan-control-md: 36px;
+  --kan-control-lg: 44px;
+  --kan-status-square: 6px;
+  --kan-label-font: "IBM Plex Mono", ui-monospace, monospace;
+  --kan-label-size: 13px;
+  --kan-label-weight: 400;
+  --kan-label-case: lowercase;
+  --kan-label-color: var(--kan-text-secondary);
+  --kan-label-square: inline-block;
+}
+
+/* ---------- Mode: product ----------
+ * For customer-facing apps. Override --kan-brand per product; keep it to one hue. */
+[data-mode="product"],
+[data-mode="product"] [data-theme] {
+  --kan-brand: #3d63dd;
+  --kan-on-brand: #ffffff;
+  --kan-brand-soft: #e4eafb;
+  --kan-selected-ring: var(--kan-brand);
+  --kan-border-strong: #c9c4bc;
+  --kan-data-active: var(--kan-brand);
+  --kan-focus: var(--kan-brand);
+  --kan-fs-body: 16px;
+  --kan-lh-body: 26px;
+  --kan-fs-small: 14px;
+  --kan-lh-small: 20px;
+  --kan-control-sm: 36px;
+  --kan-control-md: 44px;
+  --kan-control-lg: 48px;
+  --kan-status-square: 10px;
+  --kan-label-font: "Instrument Sans Variable", "Instrument Sans", system-ui, sans-serif;
+  --kan-label-size: 14px;
+  --kan-label-weight: 500;
+  --kan-label-case: none;
+  --kan-label-square: none;
+}
+[data-mode="product"]:not([data-theme="light"]),
+[data-mode="product"] [data-theme="dark"] {
+  --kan-brand: #8fa9ff;
+  --kan-on-brand: #0c0b0a;
+  --kan-brand-soft: #1d2440;
+  /* Customers need clearer layers than you do. */
+  --kan-surface-2: #22201e;
+  --kan-surface-3: #2b2926;
+  --kan-border: #3a3733;
+  --kan-border-strong: #4a4641;
+  --kan-data-muted: #4a4641;
+}
+[data-mode="product"] [data-theme="light"],
+[data-mode="product"][data-theme="light"] {
+  --kan-border-strong: #c9c4bc;
+  --kan-data-muted: #dedad3;
+}
+
 /* ---------- shadcn/ui variables, mapped to KAN ----------
  * Declared on every theme scope so a nested data-theme panel resolves them itself. */
 :root,
@@ -93,8 +163,8 @@
   --card-foreground: var(--kan-text);
   --popover: var(--kan-surface-3);
   --popover-foreground: var(--kan-text);
-  --primary: var(--kan-fill-primary);
-  --primary-foreground: var(--kan-on-primary);
+  --primary: var(--kan-brand);
+  --primary-foreground: var(--kan-on-brand);
   --secondary: var(--kan-surface-1);
   --secondary-foreground: var(--kan-text);
   --muted: var(--kan-surface-1);
@@ -167,6 +237,9 @@
   --color-success-bg: var(--kan-success-bg);
   --color-warning: var(--kan-warning);
   --color-warning-bg: var(--kan-warning-bg);
+  --color-brand: var(--kan-brand);
+  --color-on-brand: var(--kan-on-brand);
+  --color-brand-soft: var(--kan-brand-soft);
 
   /* Type */
   --font-sans: "Instrument Sans Variable", "Instrument Sans", system-ui, sans-serif;
@@ -185,10 +258,10 @@
   --text-title--letter-spacing: -0.01em;
   --text-heading: 18px;
   --text-heading--line-height: 26px;
-  --text-body: 15px;
-  --text-body--line-height: 24px;
-  --text-small: 13px;
-  --text-small--line-height: 20px;
+  --text-body: var(--kan-fs-body);
+  --text-body--line-height: var(--kan-lh-body);
+  --text-small: var(--kan-fs-small);
+  --text-small--line-height: var(--kan-lh-small);
   --text-caption: 12px;
   --text-caption--line-height: 16px;
   --text-metric-xl: 40px;
@@ -219,14 +292,14 @@
 /* ---------- KAN utilities ---------- */
 /* Section label in tools: lowercase mono, led by the KAN square. */
 @utility kan-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  line-height: var(--text-label--line-height);
-  font-weight: 400;
-  text-transform: lowercase;
+  font-family: var(--kan-label-font);
+  font-size: var(--kan-label-size);
+  line-height: 20px;
+  font-weight: var(--kan-label-weight);
+  text-transform: var(--kan-label-case);
   &::before {
     content: "";
-    display: inline-block;
+    display: var(--kan-label-square);
     width: 6px;
     height: 6px;
     margin-right: 8px;
@@ -237,11 +310,11 @@
 
 /* Same voice without the square: row labels and small captions inside a section. */
 @utility kan-label-plain {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  line-height: var(--text-label--line-height);
-  font-weight: 400;
-  text-transform: lowercase;
+  font-family: var(--kan-label-font);
+  font-size: var(--kan-label-size);
+  line-height: 20px;
+  font-weight: var(--kan-label-weight);
+  text-transform: var(--kan-label-case);
 }
 
 /* Editorial side-head: the label sits in its own margin column. */

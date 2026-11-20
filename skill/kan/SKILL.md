@@ -1,6 +1,6 @@
 ---
 name: kan
-description: Use for any UI work in Kristoffer's personal projects (portfolio, running tools, PM tools) — setting up a new React/Vite/Tailwind project, building screens, or adding components. Applies the KAN design system (Stone palette, Instrument Sans + IBM Plex Mono, shadcn-based components from the @kan registry).
+description: Use for any UI work in Kristoffer's personal projects (portfolio, running tools, PM tools, and customer-facing apps via product mode) — setting up a new React/Vite/Tailwind project, building screens, or adding components. Applies the KAN design system (Stone palette, Instrument Sans + IBM Plex Mono, shadcn-based components from the @kan registry).
 ---
 
 # KAN
@@ -32,6 +32,20 @@ Not for SeventyOne Consulting work. That has its own brand.
 Available from `@kan`: `kan-theme`, `button`, `input` (Input + Field, FieldLabel, FieldHint), `stat` (Stat, StatLabel, StatValue, StatDelta, StatBars), `status` (StatusLabel, Banner), `segmented` (Segmented, SegmentedItem), `kan-logo` (KanWordmark, KanIcon), `side-head` (SideHead, editorial only), `nav-bar` (NavBar, NavItem), `side-nav` (SideNav, SideNavGroup, SideNavItem), `toaster` (Toaster, toast).
 
 A component KAN doesn't have yet (dialog, menu, table…): add the standard shadcn one (`npx shadcn@latest add dialog`). It picks up KAN's colours automatically via the mapped variables. Then apply the rules below (sharp radii, no shadow unless floating, sentence case, mono for numbers) and tell Kristoffer so it can be added to KAN.
+
+## Personal or product mode
+
+Decide first, and ask if it isn't clear: is this a tool for Kristoffer (and people like him), or an app other people use?
+
+- **Personal (default):** nothing to set. Dark until the user picks, monochrome, lowercase mono labels with the square.
+- **Product:** set `<html data-mode="product">` and use `useKanTheme({ followSystem: true })`. Same components; kan.css switches them to sentence-case sans labels, a 16px base, 36/44/48px controls, 10px status squares and one brand accent.
+  - Set the product's accent once: `--kan-brand`, `--kan-on-brand`, `--kan-brand-soft`, with a dark variant under `[data-mode="product"]:not([data-theme="light"])`. Check 4.5:1 contrast. Default is blue #3d63dd / #8fa9ff.
+  - The accent marks the primary action, the current place (today, the active nav item) and progress. Never status, never decoration.
+  - Every status square has a word next to it. Nothing important is hover-only.
+  - Write labels in sentence case in the markup ("This week"); personal mode lowercases them with CSS.
+  - Add one line of help under any expert term (load, form, pace zones).
+  - Format dates, numbers and units with `Intl` for the user's locale (sv-SE: "20 nov", "10,1 km", 24-hour clock).
+- Use `h-(--kan-control-md)` / `size-(--kan-status-square)` instead of fixed heights in new components, so they follow the mode.
 
 ## Rules
 

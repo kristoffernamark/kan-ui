@@ -91,13 +91,13 @@ function NavItem({
       }}
       className={cn(
         "kan-focus inline-flex items-center gap-2 rounded-md text-subtle transition-colors hover:text-foreground",
-        layout === "bar" ? "h-9 px-3 text-small" : "h-11 px-3 text-body hover:bg-accent",
+        layout === "bar" ? "h-(--kan-control-md) px-3 text-small" : "h-(--kan-control-lg) px-3 text-body hover:bg-accent",
         active && "text-foreground",
         className
       )}
       {...props}
     >
-      <span className={cn("size-1.5 shrink-0 bg-foreground", !active && "hidden")} aria-hidden="true" />
+      <span className={cn("size-1.5 shrink-0 bg-brand", !active && "hidden")} aria-hidden="true" />
       <Slot.Slottable>{children}</Slot.Slottable>
     </Comp>
   )
